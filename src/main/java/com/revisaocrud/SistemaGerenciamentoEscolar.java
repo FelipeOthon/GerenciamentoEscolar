@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class SistemaGerenciamentoEscolar {
-    private static List<Disciplina> disciplinas = new ArrayList<>();
-    private static List<Turma> turmas = new ArrayList<>();
-    private static Scanner scanner = new Scanner(System.in);
+    private static final List<Disciplina> disciplinas = new ArrayList<>();
+    private static final List<Turma> turmas = new ArrayList<>();
+    private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         boolean continuar = true;
