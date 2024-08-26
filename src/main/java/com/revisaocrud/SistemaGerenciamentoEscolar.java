@@ -20,22 +20,21 @@ public class SistemaGerenciamentoEscolar {
             exibirMenu();
             int opcao = obterOpcao();
             switch (opcao) {
-                case 1: adicionarDisciplina(); break;
-                case 2: listarDisciplinas(); break;
-                case 3: atualizarDisciplina(); break;
-                case 4: removerDisciplina(); break;
-                case 5: adicionarTurma(); break;
-                case 6: listarTurmas(); break;
-                case 7: buscarTurmaPorCodigo(); break;
-                case 8: atualizarTurma(); break;
-                case 9: removerTurma(); break;
-                case 10: adicionarAluno(); break;
-                case 11: listarAlunos(); break;
-                case 12: buscarAlunoPorMatricula(); break;
-                case 13: atualizarAluno(); break;
-                case 14: removerAluno(); break;
-                case 15: continuar = false; break;
-                default: System.out.println("Opção inválida. Tente novamente."); break;
+                case 1:
+                    gerenciarDisciplinas();
+                    break;
+                case 2:
+                    gerenciarTurmas();
+                    break;
+                case 3:
+                    gerenciarAlunos();
+                    break;
+                case 4:
+                    continuar = false;
+                    break;
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+                    break;
             }
         }
         scanner.close();
@@ -44,26 +43,94 @@ public class SistemaGerenciamentoEscolar {
     private static void exibirMenu() {
         System.out.println("Bem-vindo ao Sistema de Gerenciamento Escolar!");
         System.out.println("Escolha uma opção:");
+        System.out.println("1. Gerenciar Disciplinas");
+        System.out.println("2. Gerenciar Turmas");
+        System.out.println("3. Gerenciar Alunos");
+        System.out.println("4. Sair");
+    }
+
+    private static void exibirSubMenuDisciplinas() {
+        System.out.println("Gerenciamento de Disciplinas:");
         System.out.println("1. Adicionar Disciplina");
         System.out.println("2. Listar Disciplinas");
         System.out.println("3. Atualizar Disciplina");
         System.out.println("4. Remover Disciplina");
-        System.out.println("5. Adicionar Turma");
-        System.out.println("6. Listar Turmas");
-        System.out.println("7. Buscar Turma por Código");
-        System.out.println("8. Atualizar Turma");
-        System.out.println("9. Remover Turma");
-        System.out.println("10. Adicionar Aluno");
-        System.out.println("11. Listar Alunos");
-        System.out.println("12. Buscar Aluno por Matrícula");
-        System.out.println("13. Atualizar Aluno");
-        System.out.println("14. Remover Aluno");
-        System.out.println("15. Sair");
+        System.out.println("5. Voltar ao Menu Principal");
+    }
+
+    private static void exibirSubMenuTurmas() {
+        System.out.println("Gerenciamento de Turmas:");
+        System.out.println("1. Adicionar Turma");
+        System.out.println("2. Listar Turmas");
+        System.out.println("3. Buscar Turma por Código");
+        System.out.println("4. Atualizar Turma");
+        System.out.println("5. Remover Turma");
+        System.out.println("6. Voltar ao Menu Principal");
+    }
+
+    private static void exibirSubMenuAlunos() {
+        System.out.println("Gerenciamento de Alunos:");
+        System.out.println("1. Adicionar Aluno");
+        System.out.println("2. Listar Alunos");
+        System.out.println("3. Buscar Aluno por Matrícula");
+        System.out.println("4. Atualizar Aluno");
+        System.out.println("5. Remover Aluno");
+        System.out.println("6. Voltar ao Menu Principal");
     }
 
     private static int obterOpcao() {
         System.out.print("Digite a opção desejada: ");
         return scanner.nextInt();
+    }
+
+    private static void gerenciarDisciplinas() {
+        boolean voltar = false;
+        while (!voltar) {
+            exibirSubMenuDisciplinas();
+            int opcao = obterOpcao();
+            switch (opcao) {
+                case 1: adicionarDisciplina(); break;
+                case 2: listarDisciplinas(); break;
+                case 3: atualizarDisciplina(); break;
+                case 4: removerDisciplina(); break;
+                case 5: voltar = true; break;
+                default: System.out.println("Opção inválida. Tente novamente."); break;
+            }
+        }
+    }
+
+    private static void gerenciarTurmas() {
+        boolean voltar = false;
+        while (!voltar) {
+            exibirSubMenuTurmas();
+            int opcao = obterOpcao();
+            switch (opcao) {
+                case 1: adicionarTurma(); break;
+                case 2: listarTurmas(); break;
+                case 3: buscarTurmaPorCodigo(); break;
+                case 4: atualizarTurma(); break;
+                case 5: removerTurma(); break;
+                case 6: voltar = true; break;
+                default: System.out.println("Opção inválida. Tente novamente."); break;
+            }
+        }
+    }
+
+    private static void gerenciarAlunos() {
+        boolean voltar = false;
+        while (!voltar) {
+            exibirSubMenuAlunos();
+            int opcao = obterOpcao();
+            switch (opcao) {
+                case 1: adicionarAluno(); break;
+                case 2: listarAlunos(); break;
+                case 3: buscarAlunoPorMatricula(); break;
+                case 4: atualizarAluno(); break;
+                case 5: removerAluno(); break;
+                case 6: voltar = true; break;
+                default: System.out.println("Opção inválida. Tente novamente."); break;
+            }
+        }
     }
 
     private static void adicionarDisciplina() {
@@ -181,9 +248,7 @@ public class SistemaGerenciamentoEscolar {
             System.out.print("Digite a matrícula do aluno: ");
             int matricula = scanner.nextInt();
             scanner.nextLine(); // Limpar o buffer
-            System.out.print("Digite o email do aluno: ");
-            String email = scanner.nextLine();
-            Aluno aluno = new Aluno(nome, matricula, email);
+            Aluno aluno = new Aluno(nome, matricula);
             turma.adicionarAluno(aluno);
             System.out.println("Aluno adicionado com sucesso!");
         } else {
@@ -192,77 +257,62 @@ public class SistemaGerenciamentoEscolar {
     }
 
     private static void listarAlunos() {
-        System.out.print("Digite o código da turma: ");
-        String codigoTurma = scanner.next();
-        Turma turma = buscarTurmaPorCodigo(codigoTurma);
-        if (turma != null) {
-            System.out.println("Alunos na turma " + turma.getCodigo() + ":");
-            for (Aluno aluno : turma.listarAlunos()) {
-                System.out.println(aluno);
+        System.out.println("Alunos cadastrados:");
+        for (Turma t : turmas) {
+            System.out.println("Turma: " + t.getCodigo() + " - Disciplina: " + t.getDisciplina().getNome());
+            for (Aluno a : t.getAlunos()) {
+                System.out.println(a);
             }
-        } else {
-            System.out.println("Turma não encontrada.");
         }
     }
 
     private static void buscarAlunoPorMatricula() {
-        System.out.print("Digite o código da turma: ");
-        String codigoTurma = scanner.next();
-        Turma turma = buscarTurmaPorCodigo(codigoTurma);
-        if (turma != null) {
-            System.out.print("Digite a matrícula do aluno: ");
-            int matricula = scanner.nextInt();
-            scanner.nextLine(); // Limpar o buffer
-            Aluno aluno = turma.buscarAlunoPorMatricula(matricula);
-            if (aluno != null) {
-                System.out.println("Aluno encontrado: " + aluno);
-            } else {
-                System.out.println("Aluno não encontrado.");
+        System.out.print("Digite a matrícula do aluno: ");
+        int matricula = scanner.nextInt();
+        for (Turma t : turmas) {
+            for (Aluno a : t.getAlunos()) {
+                if (a.getMatricula() == matricula) {
+                    System.out.println("Aluno encontrado: " + a);
+                    return;
+                }
             }
-        } else {
-            System.out.println("Turma não encontrada.");
         }
+        System.out.println("Aluno não encontrado.");
     }
 
     private static void atualizarAluno() {
-        System.out.print("Digite o código da turma: ");
-        String codigoTurma = scanner.next();
-        Turma turma = buscarTurmaPorCodigo(codigoTurma);
-        if (turma != null) {
-            System.out.print("Digite a matrícula do aluno a ser atualizado: ");
-            int matricula = scanner.nextInt();
-            scanner.nextLine(); // Limpar o buffer
-            Aluno aluno = turma.buscarAlunoPorMatricula(matricula);
-            if (aluno != null) {
-                System.out.print("Digite o novo nome do aluno: ");
-                String nome = scanner.nextLine();
-                System.out.print("Digite o novo email do aluno: ");
-                String email = scanner.nextLine();
-                aluno.setNome(nome);
-                aluno.setEmail(email);
-                System.out.println("Aluno atualizado com sucesso!");
-            } else {
-                System.out.println("Aluno não encontrado.");
+        System.out.print("Digite a matrícula do aluno a ser atualizado: ");
+        int matricula = scanner.nextInt();
+        for (Turma t : turmas) {
+            for (Aluno a : t.getAlunos()) {
+                if (a.getMatricula() == matricula) {
+                    System.out.print("Digite o novo nome do aluno: ");
+                    String nome = scanner.next();
+                    a.setNome(nome);
+                    System.out.println("Aluno atualizado com sucesso!");
+                    return;
+                }
             }
-        } else {
-            System.out.println("Turma não encontrada.");
         }
+        System.out.println("Aluno não encontrado.");
     }
 
     private static void removerAluno() {
-        System.out.print("Digite o código da turma: ");
-        String codigoTurma = scanner.next();
-        Turma turma = buscarTurmaPorCodigo(codigoTurma);
-        if (turma != null) {
-            System.out.print("Digite a matrícula do aluno a ser removido: ");
-            int matricula = scanner.nextInt();
-            turma.removerAluno(matricula);
-        } else {
-            System.out.println("Turma não encontrada.");
+        System.out.print("Digite a matrícula do aluno a ser removido: ");
+        int matricula = scanner.nextInt();
+        for (Turma t : turmas) {
+            for (Aluno a : t.getAlunos()) {
+                if (a.getMatricula() == matricula) {
+                    t.getAlunos().clone();
+                    System.out.println("Aluno removido com sucesso!");
+                    return;
+                }
+            }
         }
+        System.out.println("Aluno não encontrado.");
     }
 
-    // Métodos auxiliares para buscar disciplinas e turmas por código
+    // Métodos auxiliares para busca de disciplinas e turmas
     private static Disciplina buscarDisciplinaPorCodigo(String codigo) {
         for (Disciplina d : disciplinas) {
             if (d.getCodigo().equals(codigo)) {
@@ -281,4 +331,3 @@ public class SistemaGerenciamentoEscolar {
         return null;
     }
 }
-

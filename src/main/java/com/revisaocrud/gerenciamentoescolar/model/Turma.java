@@ -51,4 +51,12 @@ public class Turma {
     public Object getCodigo() {
         return null;
     }
+
+    public Aluno[] getAlunos() {
+        return new Aluno[0];
+    }
+
+    public Aluno getDisciplina() {
+        return null;
+    }
 }

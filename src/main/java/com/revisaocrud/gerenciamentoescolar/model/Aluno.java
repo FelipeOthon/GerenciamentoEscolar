@@ -5,7 +5,7 @@ public class Aluno {
     private int matricula;
     private String email;
 
-    public Aluno(String nome, int matricula, String email) {
+    public Aluno(String nome, int matricula) {
         this.nome = nome;
         this.matricula = matricula;
         this.email = email;
