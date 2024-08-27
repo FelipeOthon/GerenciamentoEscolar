@@ -23,5 +23,6 @@ public class Disciplina {
     }
 
     public void setNome(String novoNome) {
+        this.nome = novoNome;
     }
 }

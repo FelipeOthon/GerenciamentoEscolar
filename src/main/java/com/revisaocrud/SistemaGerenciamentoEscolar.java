@@ -5,6 +5,7 @@ import com.revisaocrud.gerenciamentoescolar.model.Disciplina;
 import com.revisaocrud.gerenciamentoescolar.model.Turma;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -75,12 +76,25 @@ public class SistemaGerenciamentoEscolar {
         System.out.println("3. Buscar Aluno por Matrícula");
         System.out.println("4. Atualizar Aluno");
         System.out.println("5. Remover Aluno");
-        System.out.println("6. Voltar ao Menu Principal");
+        System.out.println("6. Listar Alunos de uma Turma Específica"); // Nova opção
+        System.out.println("7. Voltar ao Menu Principal");
     }
 
     private static int obterOpcao() {
-        System.out.print("Digite a opção desejada: ");
-        return scanner.nextInt();
+        int opcao = -1;
+        boolean entradaValida = false;
+        while (!entradaValida) {
+            try {
+                System.out.print("Digite a opção desejada: ");
+                opcao = scanner.nextInt();
+                entradaValida = true; // Saímos do loop se a entrada for válida
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, insira um número.");
+                scanner.next(); // Limpa a entrada inválida
+            }
+        }
+        scanner.nextLine(); // Limpa o buffer após a entrada
+        return opcao;
     }
 
     private static void gerenciarDisciplinas() {
@@ -127,7 +141,8 @@ public class SistemaGerenciamentoEscolar {
                 case 3: buscarAlunoPorMatricula(); break;
                 case 4: atualizarAluno(); break;
                 case 5: removerAluno(); break;
-                case 6: voltar = true; break;
+                case 6: listarAlunosDaTurma(); break; // Nova opção
+                case 7: voltar = true; break;
                 default: System.out.println("Opção inválida. Tente novamente."); break;
             }
         }
@@ -135,9 +150,9 @@ public class SistemaGerenciamentoEscolar {
 
     private static void adicionarDisciplina() {
         System.out.print("Digite o nome da disciplina: ");
-        String nome = scanner.next();
+        String nome = scanner.nextLine();
         System.out.print("Digite o código da disciplina: ");
-        String codigo = scanner.next();
+        String codigo = scanner.nextLine();
         disciplinas.add(new Disciplina(nome, codigo));
         System.out.println("Disciplina adicionada com sucesso!");
     }
@@ -151,11 +166,11 @@ public class SistemaGerenciamentoEscolar {
 
     private static void atualizarDisciplina() {
         System.out.print("Digite o código da disciplina a ser atualizada: ");
-        String codigo = scanner.next();
+        String codigo = scanner.nextLine();
         Disciplina disciplina = buscarDisciplinaPorCodigo(codigo);
         if (disciplina != null) {
             System.out.print("Digite o novo nome da disciplina: ");
-            String nome = scanner.next();
+            String nome = scanner.nextLine();
             disciplina.setNome(nome);
             System.out.println("Disciplina atualizada com sucesso!");
         } else {
@@ -165,7 +180,7 @@ public class SistemaGerenciamentoEscolar {
 
     private static void removerDisciplina() {
         System.out.print("Digite o código da disciplina a ser removida: ");
-        String codigo = scanner.next();
+        String codigo = scanner.nextLine();
         Disciplina disciplina = buscarDisciplinaPorCodigo(codigo);
         if (disciplina != null) {
             disciplinas.remove(disciplina);
@@ -177,9 +192,9 @@ public class SistemaGerenciamentoEscolar {
 
     private static void adicionarTurma() {
         System.out.print("Digite o código da turma: ");
-        String codigo = scanner.next();
+        String codigo = scanner.nextLine();
         System.out.print("Digite o código da disciplina associada: ");
-        String codigoDisciplina = scanner.next();
+        String codigoDisciplina = scanner.nextLine();
         Disciplina disciplina = buscarDisciplinaPorCodigo(codigoDisciplina);
         if (disciplina != null) {
             turmas.add(new Turma(codigo, disciplina));
@@ -198,7 +213,7 @@ public class SistemaGerenciamentoEscolar {
 
     private static void buscarTurmaPorCodigo() {
         System.out.print("Digite o código da turma: ");
-        String codigo = scanner.next();
+        String codigo = scanner.nextLine();
         Turma turma = buscarTurmaPorCodigo(codigo);
         if (turma != null) {
             System.out.println("Turma encontrada: " + turma);
@@ -209,11 +224,11 @@ public class SistemaGerenciamentoEscolar {
 
     private static void atualizarTurma() {
         System.out.print("Digite o código da turma a ser atualizada: ");
-        String codigo = scanner.next();
+        String codigo = scanner.nextLine();
         Turma turma = buscarTurmaPorCodigo(codigo);
         if (turma != null) {
             System.out.print("Digite o novo código da disciplina associada: ");
-            String codigoDisciplina = scanner.next();
+            String codigoDisciplina = scanner.nextLine();
             Disciplina disciplina = buscarDisciplinaPorCodigo(codigoDisciplina);
             if (disciplina != null) {
                 turma.setDisciplina(disciplina);
@@ -228,7 +243,7 @@ public class SistemaGerenciamentoEscolar {
 
     private static void removerTurma() {
         System.out.print("Digite o código da turma a ser removida: ");
-        String codigo = scanner.next();
+        String codigo = scanner.nextLine();
         Turma turma = buscarTurmaPorCodigo(codigo);
         if (turma != null) {
             turmas.remove(turma);
@@ -240,11 +255,11 @@ public class SistemaGerenciamentoEscolar {
 
     private static void adicionarAluno() {
         System.out.print("Digite o código da turma: ");
-        String codigoTurma = scanner.next();
+        String codigoTurma = scanner.nextLine();
         Turma turma = buscarTurmaPorCodigo(codigoTurma);
         if (turma != null) {
             System.out.print("Digite o nome do aluno: ");
-            String nome = scanner.next();
+            String nome = scanner.nextLine();
             System.out.print("Digite a matrícula do aluno: ");
             int matricula = scanner.nextInt();
             scanner.nextLine(); // Limpar o buffer
@@ -269,6 +284,7 @@ public class SistemaGerenciamentoEscolar {
     private static void buscarAlunoPorMatricula() {
         System.out.print("Digite a matrícula do aluno: ");
         int matricula = scanner.nextInt();
+        scanner.nextLine(); // Limpar o buffer
         for (Turma t : turmas) {
             for (Aluno a : t.getAlunos()) {
                 if (a.getMatricula() == matricula) {
@@ -283,11 +299,12 @@ public class SistemaGerenciamentoEscolar {
     private static void atualizarAluno() {
         System.out.print("Digite a matrícula do aluno a ser atualizado: ");
         int matricula = scanner.nextInt();
+        scanner.nextLine(); // Limpar o buffer
         for (Turma t : turmas) {
             for (Aluno a : t.getAlunos()) {
                 if (a.getMatricula() == matricula) {
                     System.out.print("Digite o novo nome do aluno: ");
-                    String nome = scanner.next();
+                    String nome = scanner.nextLine();
                     a.setNome(nome);
                     System.out.println("Aluno atualizado com sucesso!");
                     return;
@@ -296,23 +313,39 @@ public class SistemaGerenciamentoEscolar {
         }
         System.out.println("Aluno não encontrado.");
     }
-
+    private static void listarAlunosDaTurma() {
+        System.out.print("Digite o código da turma: ");
+        String codigoTurma = scanner.next();
+        Turma turma = buscarTurmaPorCodigo(codigoTurma);
+        if (turma != null) {
+            List<Aluno> alunos = turma.getAlunos();
+            if (alunos.isEmpty()) {
+                System.out.println("Nenhum aluno cadastrado para esta turma.");
+            } else {
+                System.out.println("Alunos da turma " + codigoTurma + ":");
+                for (Aluno aluno : alunos) {
+                    System.out.println(aluno);
+                }
+            }
+        } else {
+            System.out.println("Turma não encontrada.");
+        }
+    }
     private static void removerAluno() {
         System.out.print("Digite a matrícula do aluno a ser removido: ");
         int matricula = scanner.nextInt();
+        scanner.nextLine(); // Limpar o buffer
         for (Turma t : turmas) {
-            for (Aluno a : t.getAlunos()) {
-                if (a.getMatricula() == matricula) {
-                    t.getAlunos().clone();
-                    System.out.println("Aluno removido com sucesso!");
-                    return;
-                }
+            Aluno alunoARemover = t.buscarAlunoPorMatricula(matricula);
+            if (alunoARemover != null) {
+                t.removerAluno(matricula);
+                System.out.println("Aluno removido com sucesso!");
+                return;
             }
         }
         System.out.println("Aluno não encontrado.");
     }
 
-    // Métodos auxiliares para busca de disciplinas e turmas
     private static Disciplina buscarDisciplinaPorCodigo(String codigo) {
         for (Disciplina d : disciplinas) {
             if (d.getCodigo().equals(codigo)) {

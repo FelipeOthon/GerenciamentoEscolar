@@ -1,6 +1,7 @@
 package com.revisaocrud.gerenciamentoescolar.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Turma {
@@ -37,7 +38,7 @@ public class Turma {
     }
 
     public List<Aluno> listarAlunos() {
-        return alunos;
+        return Collections.unmodifiableList(alunos);
     }
 
     @Override
@@ -46,17 +47,18 @@ public class Turma {
     }
 
     public void setDisciplina(Disciplina novaDisciplina) {
+        this.disciplina = novaDisciplina;
     }
 
-    public Object getCodigo() {
-        return null;
+    public String getCodigo() {
+        return this.codigo;
     }
 
-    public Aluno[] getAlunos() {
-        return new Aluno[0];
+    public List<Aluno> getAlunos() {
+        return Collections.unmodifiableList(alunos);
     }
 
-    public Aluno getDisciplina() {
-        return null;
+    public Disciplina getDisciplina() {
+        return this.disciplina;
     }
 }
