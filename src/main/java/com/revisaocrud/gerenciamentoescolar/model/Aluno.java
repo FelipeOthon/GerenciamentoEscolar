@@ -2,11 +2,13 @@ package com.revisaocrud.gerenciamentoescolar.model;
 
 public class Aluno {
     private String nome;
-    private int matricula;
+    private String matricula;
+    private Turma turma;
 
-    public Aluno(String nome, int matricula) {
+    public Aluno(String nome, String matricula, Turma turma) {
         this.nome = nome;
         this.matricula = matricula;
+        this.turma = turma;
     }
 
     public String getNome() {
@@ -17,19 +19,24 @@ public class Aluno {
         this.nome = nome;
     }
 
-    public int getMatricula() {
+    public String getMatricula() {
         return matricula;
     }
 
-    public void setMatricula(int matricula) {
+    public void setMatricula(String matricula) {
         this.matricula = matricula;
+    }
+
+    public Turma getTurma() {
+        return turma;
+    }
+
+    public void setTurma(Turma turma) {
+        this.turma = turma;
     }
 
     @Override
     public String toString() {
-        return "Aluno{" +
-                "nome='" + nome + '\'' +
-                ", matricula=" + matricula +
-                '}';
+        return "Aluno: " + nome + " (Matrícula: " + matricula + ") - Turma: " + turma.getCodigo();
     }
 }
